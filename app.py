@@ -2,16 +2,13 @@ from fastapi import FastAPI, UploadFile, File
 import oci
 import base64
 from db_util import init_db, save_inv_extraction
-
+import time
 
 app = FastAPI()
 
 # Load OCI config from ~/.oci/config
 config = oci.config.from_file()
-
 doc_client = oci.ai_document.AIServiceDocumentClient(config)
-
-
 
 @app.post("/extract")
 async def extract(file: UploadFile = File(...)):
@@ -23,7 +20,7 @@ async def extract(file: UploadFile = File(...)):
     document = oci.ai_document.models.InlineDocumentDetails(
         data=encoded_pdf
     )
-    
+
     request = oci.ai_document.models.AnalyzeDocumentDetails(
         document=document,
         features=[
@@ -36,17 +33,24 @@ async def extract(file: UploadFile = File(...)):
         ]
     )
 
+    # ⏱️ מדידת זמן
+    start_time = time.time()
     response = doc_client.analyze_document(request)
+    end_time = time.time()
+    prediction_time = end_time - start_time
 
+    # 📦 בינתיים נחזיר רק זמן חיזוי (כי data עדיין לא מחושב בקוד הזה)
     result = {
-        "confidence": "TBD...",
-        "data": "TBD...",
-        "dataConfidence": "TBD..."
+        "confidence": "1",
+        "data": None,
+        "dataConfidence": None,
+        "predictionTime": prediction_time
     }
 
-    # TODO: call to save_inv_extraction(result)    ( no need to change this function)
-    
-    return response
+    # אפשר לשמור את התוצאה בבסיס הנתונים (כשזה יהיה רלוונטי)
+    # save_inv_extraction(result)
+
+    return result
 
 
 if __name__ == "__main__":
