@@ -5,7 +5,8 @@ The following API endpoints will be tested:
 
 - POST /extract  
   - Successful invoice extraction  
-  - Invalid or missing file handling  
+  - Invalid or missing file handling 
+  - confidence 
 
 - GET /invoice/{invoice_id}  
   - Retrieve existing invoice  
