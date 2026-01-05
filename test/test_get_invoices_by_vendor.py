@@ -45,7 +45,7 @@ class TestGetInvoicesByVendorName(unittest.TestCase):
         # Seed invoice 2
         save_inv_extraction({"data": invoice_2})
 
-
+ # ------------------ FONUD ---------
     def test_invoice_by_vendor_found(self):
         # Act: call the endpoint with the seeded invoice vendor name
         response = self.client.get(f"/invoices/vendor/{self.vendor_name}")
@@ -62,7 +62,7 @@ class TestGetInvoicesByVendorName(unittest.TestCase):
         self.assertIsInstance(data["invoices"], list)
         self.assertEqual(len(data["invoices"]),2)
         
-
+#------------------ NOT FOUND ------------------------
     def test_invoice_not_found_vendor(self):
         invalid_Vendor_name = "Super"
         response = self.client.get(f"/invoices/vendor/{invalid_Vendor_name}")

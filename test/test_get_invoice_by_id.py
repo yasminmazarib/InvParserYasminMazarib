@@ -28,7 +28,7 @@ class TestGetInvoiceById(unittest.TestCase):
 
         result = {"data": SEED_DATA}
         save_inv_extraction(result)
-
+#--------------First check - invoice is found-------------------
     def test_invoice_found(self):
         # Act: call the endpoint with the seeded invoice id
         response = self.client.get(f"/invoice/{self.invoice_id}")
