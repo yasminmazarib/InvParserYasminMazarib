@@ -1,6 +1,7 @@
 import unittest
 from unittest.mock import patch, MagicMock
 from db_util import init_db
+
 #test invoice
 class TestInvoiceExtraction(unittest.TestCase):
     
@@ -166,10 +167,12 @@ class TestInvoiceExtraction(unittest.TestCase):
         }
         
         # Validate response structure and values
+        
         self.assertEqual(result["data"], expected_data)
         
         print("✓ All assertions passed!")
         print(f"Response: {json.dumps(result, indent=2)}")
+
 
 if __name__ == '__main__':
     unittest.main()
