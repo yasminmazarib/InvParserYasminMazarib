@@ -8,3 +8,5 @@ httpx
 pytest
 pytest-cov
 pytest-html
+
+sqlalchemy
